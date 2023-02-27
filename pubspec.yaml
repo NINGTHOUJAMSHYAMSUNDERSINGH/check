@@ -39,6 +39,9 @@ dependencies:
   firebase_core: ^2.7.0
   firebase_auth: ^4.2.9
   flutter_easyloading: ^3.0.5
+  intl_phone_field: ^3.1.0
+  extended_phone_number_input: ^1.0.2
+  country_codes: ^2.2.0
 
 dev_dependencies:
   flutter_test:
