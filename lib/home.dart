@@ -22,39 +22,47 @@ class _MyWidgetState extends State<MyWidget> {
       appBar: AppBar(
         title: const Text("Shya"),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            isOtpSent
-                ? TextField(
-                    decoration: InputDecoration(hintText: "Enter OTP"),
-                  )
-                : TextField(
-                    decoration: InputDecoration(hintText: "Enter OTP"),
-                  ),
-            ElevatedButton(
-                onPressed: () async {
-                  EasyLoading.show(status: "please wait while sending otp");
-                  FirebaseAuth auth = FirebaseAuth.instance;
-                  await auth.verifyPhoneNumber(
-                    phoneNumber: "+918787566904",
-                    verificationCompleted: (phoneAuthCredential) async {},
-                    verificationFailed: (verificationFailed) async {
-                      EasyLoading.showError("Error");
-                    },
-                    codeSent: (verificationId, resendingToken) async {
-                      setState(() {
-                        verficationid = verificationId;
-                      });
+      body: Column(
+        children: [
+          Spacer(),
+          TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: "Phone Number",
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          isOtpSent
+              ? TextField(
+                  decoration: InputDecoration(hintText: "Enter OTP"),
+                )
+              : TextField(
+                  decoration: InputDecoration(hintText: "Enter "),
+                ),
+          ElevatedButton(
+              onPressed: () async {
+                EasyLoading.show(status: "please wait while sending otp");
+                FirebaseAuth auth = FirebaseAuth.instance;
+                await auth.verifyPhoneNumber(
+                  phoneNumber: phoneController.text,
+                  verificationCompleted: (phoneAuthCredential) async {},
+                  verificationFailed: (verificationFailed) async {
+                    EasyLoading.showError("Error");
+                  },
+                  codeSent: (verificationId, resendingToken) async {
+                    setState(() {
+                      verficationid = verificationId;
+                    });
 
-                      EasyLoading.showSuccess('otp send');
-                    },
-                    codeAutoRetrievalTimeout: (verificationId) async {},
-                  );
-                },
-                child: Text("Send otp")),
-          ],
-        ),
+                    EasyLoading.showSuccess('otp send');
+                  },
+                  codeAutoRetrievalTimeout: (verificationId) async {},
+                );
+              },
+              child: Text("Send otp")),
+        ],
       ),
     );
   }
